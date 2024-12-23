@@ -5,16 +5,13 @@ from src.support import (
     extract_zip,
     extract_nested_zips,
     convert_formats,
-    read_file_content,
-    delete_temp_folder,
-)
+    read_file_content)
 from src.config import UPLOAD_FOLDER
 
 from src.history import add_project_to_json, remove_project_from_json, get_projects
 import shutil
 import tempfile
 import os
-import threading
 
 app = Flask(__name__)
 
@@ -145,4 +142,4 @@ def compare(a, b):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0", port=5001)

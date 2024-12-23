@@ -1,13 +1,13 @@
 import difflib
 import re
-import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import nltk
-from src.support import read_file_content
-
+from src.support import read_file_content, only_once
+from pathlib import Path
+from nltk.downloader import Downloader
 
 def compare_files(file1, file2):
     # Apertura dei file
@@ -41,19 +41,48 @@ def compare_files(file1, file2):
     return similarity
 
 
+
+
+def check_package_exists(package_id, download_dir):
+    downloader = Downloader(download_dir=str(download_dir))
+    return downloader.is_installed(package_id)
+
+
+def download_nltk_data(list_of_resources, download_dir):
+    download_dir_path = Path(download_dir)
+    download_dir_path.mkdir(parents=True, exist_ok=True)
+    downloader = Downloader(download_dir=str(download_dir_path))
+    for resource in list_of_resources:
+        if not check_package_exists(resource, download_dir):
+            downloader.download(info_or_id=resource, quiet=True)
+            print(f"Downloaded {resource} to {download_dir}")
+
+
 def preprocess_text(text):
-    try:
-        l = stopwords.words("english")
-    except Exception:
-        nltk.download('stopwords')
-        nltk.download('punkt')
     stop_words = set(stopwords.words("english") + stopwords.words("italian"))
     words = word_tokenize(text)
-    words = [word.lower() for word in words if word.isalnum() and word.lower() not in stop_words]
+    words = [
+        word.lower()
+        for word in words
+        if word.isalnum() and word.lower() not in stop_words
+    ]
     return " ".join(words)
 
 
+@only_once
+def prepare_cosine():
+    try:
+        l = stopwords.words("english")
+    except Exception:
+        nltk.download("stopwords")
+
+    print("Controllo se ho le cose")
+
+    download_nltk_data(["stopwords", "punkt", "punkt_tab"], "./data/nltk/")
+
+
 def cosine_compare_files(file1, file2):
+    prepare_cosine()
     text1 = read_file_content(file1)
     text2 = read_file_content(file2)
     # with open(file1, 'r', encoding='utf-8') as f:
@@ -74,6 +103,7 @@ def cosine_compare_files(file1, file2):
 
 def spacy_compare_file(file1, file2):
     import spacy
+
     # Nome del modello
     # model_name = "en_core_web_sm"
     model_name = "it_core_news_sm"
@@ -88,10 +118,10 @@ def spacy_compare_file(file1, file2):
         spacy.cli.download(model_name)
     nlp = spacy.load(model_name)
 
-    with open(file1, 'r', encoding='utf-8') as f:
+    with open(file1, "r", encoding="utf-8") as f:
         text1 = f.read()
 
-    with open(file2, 'r', encoding='utf-8') as f:
+    with open(file2, "r", encoding="utf-8") as f:
         text2 = f.read()
 
     doc1 = nlp(text1)
@@ -102,7 +132,7 @@ def spacy_compare_file(file1, file2):
 
 
 comparators = {
-    'classic': compare_files,
-    'cosine': cosine_compare_files,
-    'spacy': spacy_compare_file
+    "classic": compare_files,
+    "cosine": cosine_compare_files,
+    "spacy": spacy_compare_file,
 }

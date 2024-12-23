@@ -187,3 +187,10 @@ def delete_temp_folder(temp_folder, delay):
     shutil.rmtree(temp_folder)
     print(f"Temp folder {temp_folder} deleted")
 
+
+def only_once(func):
+    def wrapper(*args, **kwargs):
+        if not hasattr(wrapper, "has_run"):
+            setattr(wrapper, "has_run", True)
+            return func(*args, **kwargs)
+    return wrapper
