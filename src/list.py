@@ -35,7 +35,7 @@ def create_html_similarity_matrix(D, base_path, file_paths):
             last_prop = prop
             rowspan = 1
     TABLE += (
-        f"<th colspan='{rowspan}'> {last_prop.upper() if last_prop else "err"} </th>"
+        f"<th colspan='{rowspan}'> {last_prop.upper()} </th>"
     )
     TABLE += "</tr>"
 
@@ -73,7 +73,7 @@ def create_html_similarity_matrix(D, base_path, file_paths):
             rowspan = 1
     else:
         # ultimo giro
-        title = f"<th rowspan='{rowspan}'> {last_prop.upper() if last_prop else "err"} </th> "
+        title = f"<th rowspan='{rowspan}'> {last_prop.upper()} </th> "
         accumulator[0] = title + accumulator[0]
         TABLE += "<tr>" + "</tr><tr>".join(accumulator) + "</tr>"
 
