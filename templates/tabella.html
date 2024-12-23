@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> -->
+</head>
+
+<body>
+<div class="container">
+
+
+    <!-- Link per condividere il risultato -->
+    <div class="share-link">
+        <p>Condividi questo risultato: <a href="{{ share_link }}">{{ share_link }}</a></p>
+    </div>
+    
+    <!-- Inserisci l'HTML della tabella qui -->
+    {{ table_html|safe }}
+
+    <table>
+        <thead>
+        <tr>
+            <th class="text-center">File 1</th>
+            <th class="text-center">Studente 1</th>
+            <th class="text-center">Value</th>
+            <th class="text-center">Studente 2</th>
+            <th class="text-center">File 2</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ list_html|safe }}
+        </tbody>
+    </table>
+
+
+</div>
+
+<!-- Includi lo script di Bootstrap -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+</body>
+
+<style>
+
+
+    .matrix thead th {
+        width: 30px;
+        max-width: 30px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        writing-mode: vertical-rl;
+        text-align: end;
+        background-color: lightgrey;
+    }
+
+    .matrix th.text-center,
+    th.text-center {
+        text-align: center;
+        border: 0;
+        writing-mode: horizontal-tb;
+    }
+
+
+    th {
+        text-align: end;
+    }
+
+    th,
+    .owner,
+    .same-owner {
+        background-color: lightgrey;
+    }
+
+    .owner {
+        padding: 10px;
+        display: block; /* Per estendere il colore di sfondo all'intera cella */
+        /* background-color: lightgrey; */
+
+    }
+
+
+    tbody td,
+    tbody tr {
+        border: 1px solid black;
+    }
+</style>
+
+</html>

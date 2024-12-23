@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Confronto File PHP</title>
+
+        <!-- Collega i file Prism.js e Prism.css -->
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.css">
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.js"></script>
+
+    </head>
+
+    <body>
+        <div style="display: flex; justify-content: space-around;">
+
+            <div class="file-container">
+                <h2>Contenuto di {{ file1 }}</h2>
+                <div class="container">
+                    <pre><code class="language-php">{{ content_file1 }}</code></pre>
+                </div>
+            </div>
+
+            <div class="file-container">
+                <h2>Contenuto di {{ file2 }}</h2>
+                <div class="container">
+                    <pre><code class="language-php">{{ content_file2 }}</code></pre>
+                </div>
+            </div>
+
+        </div>
+    </body>
+    <!-- Aggiungi stili personalizzati per i contenitori -->
+    <style>
+        .file-container {
+            height: 100vh;
+            /* Imposta l'altezza del contenitore al 100% dell'altezza della finestra */
+
+            width: 45%;
+            /* Imposta la larghezza desiderata */
+            margin: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        h2 {
+            line-break: anywhere;
+        }
+
+
+        .container {
+            height: calc(100% - 80px);
+            overflow-y: auto;
+            /* Abilita la barra di scorrimento verticale se necessario */
+            box-sizing: border-box;
+            /* Include il bordo e il padding nella dimensione totale */
+        }
+    </style>
+
+</html>
