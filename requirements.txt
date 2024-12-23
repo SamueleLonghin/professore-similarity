@@ -3,9 +3,6 @@ numpy
 pandas
 scipy
 matplotlib
-shutil
-tempfile
-zipfile
 docx
 PyMuPDF
 scikit-learn
