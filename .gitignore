@@ -1,1 +1,4 @@
 /env
+temp_files.json
+__pycache__
+src/__pycache__

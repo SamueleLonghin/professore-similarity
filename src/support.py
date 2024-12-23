@@ -186,3 +186,4 @@ def delete_temp_folder(temp_folder, delay):
     time.sleep(delay)
     shutil.rmtree(temp_folder)
     print(f"Temp folder {temp_folder} deleted")
+

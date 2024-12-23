@@ -1,17 +1,12 @@
 <!-- templates/index.html -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload and Extract ZIP</title>
-    <!-- Includi il file CSS di Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-</head>
-<body class="container mt-5">
+{% extends "base.html" %}
 
-<h1 class="mb-4">Upload and Extract ZIP</h1>
+{% block title %}Comparatore di files{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Comparatore di files</h1>
+<h2 class="mb-4">Avvia un nuovo progetto</h2>
 
 {% if error %}
 <div class="alert alert-danger" role="alert">
@@ -32,10 +27,14 @@
     </div>
 
     <div class="form-group">
+        <label for="nome">Nome del progetto</label>
+        <input type="text" id="nome" class="form-control" name="nome" required>
+    </div>
+
+    <div class="form-group">
         <label>Select comparison algorithm:</label>
         <div class="form-check">
-            <input id="algorithm-classic" class="form-check-input" type="radio" name="algorithm" value="classic"
-                   checked>
+            <input id="algorithm-classic" class="form-check-input" type="radio" name="algorithm" value="classic" checked>
             <label for="algorithm-classic" class="form-check-label">Classico</label>
         </div>
         <div class="form-check">
@@ -44,18 +43,21 @@
         </div>
         <!-- Aggiungi altre opzioni a seconda dei tuoi algoritmi -->
     </div>
-    <div class="form-group">
-        <label for="pass">Password</label>
-        <input type="password" id="pass" class="form-control" name="password" required>
-    </div>
     <button type="submit" class="btn btn-primary">Upload and Extract</button>
 </form>
 
-<!-- Includi il file JavaScript di Bootstrap e il file JavaScript di jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</body>
-</html>
-
-
+<div class="mt-4">
+    <h2>Progetti</h2>
+    <ul>
+        {% for project_id, nome in projects %}
+        <li>
+            {{ nome }}
+            <form action="/delete_project/{{ project_id }}" method="post" style="display:inline;">
+                <button type="submit">Elimina</button>
+            </form>
+            <a href="/tabella/classic/{{ project_id }}">Visualizza</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
