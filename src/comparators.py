@@ -42,20 +42,12 @@ def compare_files(file1, file2):
 
 
 
-
-def check_package_exists(package_id, download_dir):
-    downloader = Downloader(download_dir=str(download_dir))
-    return downloader.is_installed(package_id)
-
-
-def download_nltk_data(list_of_resources, download_dir):
-    download_dir_path = Path(download_dir)
-    download_dir_path.mkdir(parents=True, exist_ok=True)
+def download_nltk_data(list_of_resources):
     downloader = Downloader()
     for resource in list_of_resources:
-        if not check_package_exists(resource, download_dir):
+        if not downloader.is_installed(resource):
             downloader.download(info_or_id=resource, quiet=True)
-            print(f"Downloaded {resource} to {download_dir}")
+            print(f"Downloaded {resource}")
 
 
 def preprocess_text(text):
@@ -78,7 +70,7 @@ def prepare_cosine():
 
     print("Controllo se ho le cose")
 
-    download_nltk_data(["stopwords", "punkt", "punkt_tab"], "./data/nltk/")
+    download_nltk_data(["stopwords", "punkt", "punkt_tab"])
 
 
 def cosine_compare_files(file1, file2):
