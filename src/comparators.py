@@ -51,7 +51,7 @@ def check_package_exists(package_id, download_dir):
 def download_nltk_data(list_of_resources, download_dir):
     download_dir_path = Path(download_dir)
     download_dir_path.mkdir(parents=True, exist_ok=True)
-    downloader = Downloader(download_dir=str(download_dir_path))
+    downloader = Downloader()
     for resource in list_of_resources:
         if not check_package_exists(resource, download_dir):
             downloader.download(info_or_id=resource, quiet=True)
