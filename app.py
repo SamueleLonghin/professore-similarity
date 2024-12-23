@@ -117,13 +117,7 @@ def action_table():
     add_project_to_json(project_id, nome)
 
     # Creo la pagina
-    html = similarity_html(project_folder, algorithm, project_id)
-
-    # Elimina i file temporanei dopo un giorno (86400 secondi)
-    delay = 86400  # tempo in secondi
-    threading.Thread(target=delete_temp_folder, args=(project_folder, delay)).start()
-
-    return html
+    return similarity_html(project_folder, algorithm, project_id)
 
 
 @app.route("/tabella/<string:algorithm>/<string:project_id>", methods=["GET"])
@@ -151,4 +145,4 @@ def compare(a, b):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5001)
+    app.run(debug=True, host="0.0.0.0")
